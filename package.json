@@ -1,0 +1,19 @@
+{
+  "name": "leftlovers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesarAdan1/api-v1.git"
+  },
+  "author": "Cesar Adan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CesarAdan1/api-v1/issues"
+  },
+  "homepage": "https://github.com/CesarAdan1/api-v1#readme"
+}
