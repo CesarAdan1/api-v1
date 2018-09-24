@@ -7,10 +7,10 @@ const Controller = {
             ProfileUser
                 .find()
                 .exec()
-                .then(profileuser =>{
+                .then(profileusers =>{
                     response    
                         .json({
-                            profileuser
+                            profileusers
                         })
                         .status(200);
                 })
@@ -20,7 +20,7 @@ const Controller = {
             getById: (request, response) => {
 
                 const { profileusersId } = request.params;
-                const profileuser = profileusers.data.filter(profileuser => profileuser.id === parseInt(profileusersId) );
+                const profileusers = profileusers.data.filter(profileusers => profileuser.id === parseInt(profileusersId) );
                 
                 response
                     .json({
