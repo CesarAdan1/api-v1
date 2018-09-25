@@ -1,28 +1,40 @@
 const { Router } = require('express');
 
+/* Initialise and create a Router instance */
 const app = Router();
 
-//Controllers
-
-const ProfileUser = require('../controllers/ProfileUser');
+/**
+ * Controllers
+ *
+ * They will help us to write our logic in a separated file to keep clean
+ * our routes configuration file.
+ *
+ * [1] Companies
+ */
+const Companies = require('../controllers/Companies');
 const User = require('../controllers/User');
 
 const isAuthenticated = require('../services/Auth');
 
-//Endpoints
+/**
+ * Endpoints
+ *
+ * [1] Companies
+ *     `get(/companies)`
+ *     `post(/companies)`
+ *     `put(/companies)`
+ *     `delete(/companies)`
+ */
+app.route('/companies')
+  .get(Companies.index)
+  .post(isAuthenticated, Companies.create)
+  .put(Companies.update)
+  .delete(Companies.remove);
 
-app.get('/profileuser/:profileuserId', ProfileUser.getById);
-
-app.route('/profileusers')
-    .get(ProfileUser.index)
-    .post(isAuthenticated, ProfileUser.create)
-    .put(ProfileUser.update)
-    .delete(ProfileUser.remove);
-
-app.get('/profileuser/:profileuserId', ProfileUser.getById);
+app.get('/companies/:companyId', Companies.getById);
 
 app.post('/auth/signup', User.create);
-app.get('/auth/login', User.login)
+app.post('/auth/login', User.login);
 app.get('/users', User.index);
 
 module.exports = app;

@@ -5,5 +5,5 @@ const Schema = ODM.Schema({
     name: String
 });
 
-module.exports = ODM.model('ProfileUser', Schema);
+module.exports = ODM.model('Companies', Schema);
 
