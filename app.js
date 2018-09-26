@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3001;
  *
  * [1] Control the connection string in a `process.env` variable
  */
-// const MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost:27017/${ process.env.MONGODB_DATABASE }`;
+ //const MONGODB_URI = process.env.MONGODB_URI || `mongodb://MongoDB shell/${ process.env.MONGODB_DATABASE }`;
 
 /**
  * [1.1] Mongoose Connect
@@ -78,8 +78,8 @@ app.use(express.urlencoded({
  */
 app.get('/', (request, response) => {
   response.render('main', {
-    title: 'Eat Healthy REST API',
-    subtitle: 'Eat Healthy REST API'
+    title: 'Left Lovers REST API',
+    subtitle: 'Left Lovers REST API'
   });
 });
 
@@ -113,7 +113,7 @@ app.options('*', (request, response, next) => {
 /**
  * [7] Configure endpoints access through `/api` namespace
  */
-app.use('/apieh/v1', api);
+app.use('/api/v1', api);
 
 /**
  * [8] 404 Not Found
