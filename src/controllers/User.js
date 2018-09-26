@@ -37,6 +37,7 @@ const Controller = {
 
           const newUser = new User({
             _id: mongoose.Types.ObjectId(),
+            username: request.body.username,
             email: request.body.email,
             password: hash
           });
