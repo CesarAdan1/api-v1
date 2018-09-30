@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Data = require('../models/Data');
 
 const Controller = {

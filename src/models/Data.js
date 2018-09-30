@@ -29,22 +29,22 @@ const Schema = new mongoose.Schema({
     },   
     initdate:{
         type: Date,
-        default: Date.now,
+        
         required: true,
     },
     enddate:{
         type: Date,
-        default: Date.now,
+        
         required: true,
     },
     inithour:{
         type: Date,
-        default: Date.now,
+        
         required: true,
     },
     endhour:{
         type: Date,
-        default: Date.now,
+        
         required: true,
     }
 })

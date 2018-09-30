@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const app = Router();
 const User = require('../controllers/User');
-// const Data = require('../controllers/Data');
+
 // const Google = require('../controllers/Google');
 
 // app.route('/data')

@@ -79,10 +79,9 @@ app.use(express.urlencoded({
 app.get('/', (request, response) => {
   response.render('main', {
     title: 'Left Lovers REST API',
-    subtitle: 'Left Lovers REST API'
+    subtitle: 'Docs'
   });
 });
-
 /**
  * [5] CORS
  *
@@ -156,14 +155,15 @@ app.use((error, request, response, next) => {
       }
     });
 
-  console.log(chalk.red(formatedMessage));
+  console.log(formatedMessage);
 });
+
 
 /**
  * [10] Run and listen the server on an specific port.
  */
 app.listen(PORT, () => {
-  const formatedMessage = chalk.green(`Express server running on PORT: ${ PORT }`);
+  const formatedMessage = `Express server running on PORT: ${ PORT }`;
 
   console.log(formatedMessage);
 });
