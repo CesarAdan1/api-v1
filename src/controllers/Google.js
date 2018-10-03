@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const ODM= require('mongoose');
 
 const Google = require('../models/Google');
 
@@ -26,17 +26,17 @@ const Controller = {
     create: (request, response) => {
         Google
             .find({
-                nameplace: request.body.email
+                nameplace: request.body.nameplace
             })
             .exec()
             .then(googledata => {
                 if(googledata.length < 1){
                 const newData = new Data({
-                    _id: mongoose.Types.ObjectId(),
-                    imageplace: request.body.imageplace,
+                    _id: ODM.Types.ObjectId(),
+                    
                     placelocation: request.body.placelocation,
-                    nameplace: request.body.nameplace,
-                    map: request.body.map,
+                    nameplace: request.body.nameplace, 
+                    telefono: request.body.telefono                  
 
                 });
 
@@ -65,7 +65,7 @@ const Controller = {
                     }
                 })
                 .catch(error => console.log(error));
-                 },
+                 }
                 //  remove: (request, response) => {
                 //      Google
                 //         .findByIdAndRemove(request.params.userId)

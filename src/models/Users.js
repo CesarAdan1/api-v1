@@ -1,24 +1,24 @@
-const ODM= require('mongoose');
-
+const ODM = require('mongoose');
 
 const Schema = new ODM.Schema({
   _id: ODM.Schema.Types.ObjectId,
-
-  placelocation: {
+  username: {
     type: String,
     required: true,
-   
+    unique: true
   },
-  nameplace: {
+  email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
-  telefono: {
+  password: {
     type: String,
     required: true
   }
-  
 });
 
-module.exports = ODM.model('Google', Schema);
+module.exports = ODM.model('Users', Schema);
+
+
 

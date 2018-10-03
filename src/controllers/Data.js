@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const ODM = require('mongoose');
 const Data = require('../models/Data');
 
 const Controller = {
@@ -24,28 +24,22 @@ const Controller = {
     },
     create: (request, response) => {
         Data
-            .find({
-                
-            })
+            
             .exec()
-            .then(dataobtained => {
-                if(dataobtained.length < 1) {
+            .then(data => {
+                if(data.length < 1) {
                     
                     const newData = new Data({
-                        _id: mongoose.Types.ObjectId(),
-                        imagedish: request.body.imagedish,
-                        typefood: request.body.typefood,
+                        _id: ODM.Types.ObjectId(),
+                        food: request.body.food,
                         lastprice: request.body.lastprice,
                         actualprices: request.body.actualprice,
-                        save: request.body.save,
-                        initdate: request.body.initdate,
-                        enddate: request.body.enddate,
-                        inithour: request.body.inithour,
-                        endhour: request.body.endhour,
+                        saving: request.body.save
+                        
                     });
                     newData
                         .save()
-                        ,then(saved => {
+                        .then(saved => {
                             response
                                 .status(201)
                                 .json({
@@ -80,19 +74,7 @@ const Controller = {
                 message: 'User was deleted.'
               });
           });
-      },
-      update: (request, response) => {
-        Data
-          .updateOne(request.params.userId)
-          .exec()
-          .then(() => {
-            response
-              .status(200)
-              .json({
-                message: 'You update fields'
-              });
-          });
-      },
+      }
 }
 
 module.exports = Controller;

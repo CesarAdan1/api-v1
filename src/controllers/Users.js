@@ -1,16 +1,15 @@
-const mongoose = require('mongoose');
+const ODM = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
-
-const User = require('../models/User');
+const Users = require('../models/Users');
 
 const Controller = {
-  index: (request, response) => {
-    User
+  index: (req, res) => {
+    Users
       .find({})
       .exec()
       .then(users => {
-        response
+        res
           .status(200)
           .json({
             users,
@@ -18,48 +17,49 @@ const Controller = {
           });
       })
       .catch(error => {
-        response
+        res
           .status(500)
           .json({
             error
           });
       });
   },
-  create: (request, response) => {
-    User
+  create: (req, res) => {
+    Users
       .find({
-        email: request.body.email
+        email: req.body.email,
+        username: req.body.username
       })
       .exec()
       .then(users => {
         if (users.length < 1) {
-          const hash = bcrypt.hashSync(request.body.password);
+          const hash = bcrypt.hashSync(req.body.password);
 
-          const newUser = new User({
-            _id: mongoose.Types.ObjectId(),
-            username: request.body.username,
-            email: request.body.email,
-            password: hash
+          const newUser = new Users({
+            _id: ODM.Types.ObjectId(),
+            email: req.body.email,
+            password: hash,
+           
           });
 
           newUser
             .save()
             .then(saved => {
-              response
+              res
                 .status(201)
                 .json({
                   message: 'User created successfully.'
                 });
             })
             .catch(error => {
-              response
+              res
                 .status(500)
                 .json({
                   error
                 })
             });
         } else {
-          response
+          res
             .status(422)
             .json({
               message: 'User already exists.'
@@ -68,12 +68,12 @@ const Controller = {
       })
       .catch(error => console.log(error));
   },
-  remove: (request, response) => {
-    User
-      .findByIdAndRemove(request.params.userId)
+  remove: (req, res) => {
+    Users
+      .findByIdAndRemove(req.params.userId)
       .exec()
       .then(() => {
-        response
+        res
           .status(200)
           .json({
             message: 'User was deleted.'
@@ -81,18 +81,18 @@ const Controller = {
       });
   },
 
-  login: (request, response) => {
-    User
+  login: (req, res) => {
+    Users
       .find({
-        email: request.body.email
+        email: req.body.email
       })
       .exec()
       .then(user => {
         if (user.length > 0) {
 
-          bcrypt.compare(request.body.password, user[0].password, (error, result) => {
+          bcrypt.compare(req.body.password, user[0].password, (error, result) => {
             if (error) {
-              return response
+              return res
                 .status(401)
                 .json({
                   message: 'Authentication failed.'
@@ -107,29 +107,50 @@ const Controller = {
                 expiresIn: '1h'
               });
 
-              return response
+              return res
                 .status(200)
                 .json({
                   message: 'Authentication successfull.',
-                  token
+                  token,
+                  user
                 });
             }
 
-            response
+            res
               .status(401)
               .json({
                 message: 'Authentication failed.'
               })
           });
         } else {
-          response
+          res
             .status(422)
             .json({
               message: 'Authentication failed.'
             })
         }
       });
-  }
+  },
+  getById: (req, res) => {
+    Users
+      .findById(req.params.userId)
+      .exec()
+      .then(user => {
+        res
+          .status(200
+)          .json({
+            user
+          });
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({
+            error
+          });
+      });
+  },
 };
 
 module.exports = Controller;
+

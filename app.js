@@ -1,40 +1,24 @@
-require('dotenv').config()
+require('dotenv').config();
 
-/* Import the modules. */
-const chalk = require('chalk');
 const express = require('express');
-const logger = require('morgan');
-const ODM = require('mongoose');
-
-/* Import all the routes configuration */
-const api = require('./src/routes/api');
-
-/* [0] Instantiate the Express Class into  `app` variable. */
 const app = express();
+const logger = require('morgan');
+const chalk = require('chalk');
+const log = console.log;
+const api = require('./src/routes/api');
+const ODM = require('mongoose');
 const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-/**
- * [1] Database
- *
- * [1] Control the connection string in a `process.env` variable
- */
- //const MONGODB_URI = process.env.MONGODB_URI || `mongodb://MongoDB shell/${ process.env.MONGODB_DATABASE }`;
+//////////////////////////////////////////////////////////////////////////////
 
-/**
- * [1.1] Mongoose Connect
- *
- * [1] Connect the API to MongoDB using `mongoose` and enable
- * `useMongoClient`.
- */
-ODM.connect(process.env.MONGODB_URI, {
+//MONGO_URI on mlab
+//'mongodb://<dbuser>:<dbpassword>@ds133358.mlab.com:33358/hacked_restapi' ||
+
+ODM.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 
-/**
- * [1.2] Mongoose Events
- *
- * [1] Listen on `connected` Event and print a helper message in console
- */
 ODM.connection.on('connected', () => {
   const formatedMessage = {
     host: process.env.MONGODB_PROVIDER,
@@ -44,83 +28,44 @@ ODM.connection.on('connected', () => {
   console.log(JSON.stringify(formatedMessage, null, 2));
 });
 
-/**
- * [2] Views Configuration
- *
- * [1] Set the `views` variable and pass it the relative path
- * [2] Configure the templage engine using `pug`
- * [3] Render visually properly JSON data in the browser
- */
-app.set('views', './src/views');
-app.set('view engine', 'pug');
-app.set('json spaces', 2);
 
-/**
- * [3] Middlewares
- * Runs before each request hit the `routes` configuration.
- *
- * [1] Logs all requests
- * [2] Define the static route to serve files from `/public` folder
- * [3] Enable JSON and URLEnconded formats to read the body of a request
- */
-app.use(logger('dev'));
-app.use('/static', express.static('public'));
+//middleware
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+app.use('/static',express.static('public'));
+app.use(logger('dev'));
+app.set('views', './src/views');
+app.set('view engine', 'pug');
+app.set('json spaces', 2);
 
-/**
- * [4] Routes
- *
- * [1] `app.get('/')` will render a `.pug` file located in `src/views/main.pug`
- * [2] As a second param we are sending content using a JavaScript Object
- */
-app.get('/', (request, response) => {
-  response.render('main', {
-    title: 'Left Lovers REST API',
-    subtitle: 'Docs'
-  });
+app.get('/',(req, res) => {
+	res.render('main');
 });
-/**
- * [5] CORS
- *
- * Enable Cross-Origin-Resource-Sharing and configure some common
- * headers in the response.
- */
+
+app.use('/api/v1',api);
+
+
+// [5] CORS
 app.use((request, response, next) => {
   response.header('Access-Control-Allow-Origin', '*');
   response.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
-
   next();
 });
 
-/**
- * [6] OPTIONS
- *
- * Enable `OPTIONS` method for preflight requests.
- */
+
+// [6] OPTIONS
 app.options('*', (request, response, next) => {
   response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   response.send(200);
   next();
 });
 
-/**
- * [7] Configure endpoints access through `/api` namespace
- */
-app.use('/api/v1', api);
-
-/**
- * [8] 404 Not Found
- * Catch the error.
- *
- * `app.use` it’s called every time a request is sent to the
- * server.
- */
+ // [8] 404 Not Found
 app.use((request, response, next) => {
   const ERROR_404 = {
     error: {
@@ -132,13 +77,7 @@ app.use((request, response, next) => {
   next(ERROR_404);
 });
 
-/**
- * [9] 500 Internal Error Server
- * Catch the error.
- *
- * `app.use` it’s called every time a request is sent to the
- * server.
- */
+// [9] 500 Internal Error Server
 app.use((error, request, response, next) => {
   const body = error.error;
   const STATUS_CODE = body.status || 500;
@@ -159,11 +98,6 @@ app.use((error, request, response, next) => {
 });
 
 
-/**
- * [10] Run and listen the server on an specific port.
- */
-app.listen(PORT, () => {
-  const formatedMessage = `Express server running on PORT: ${ PORT }`;
-
-  console.log(formatedMessage);
+app.listen(PORT, (req, res) => {
+	log(chalk.red(`express server is running in port:${ PORT }`));
 });

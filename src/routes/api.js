@@ -1,28 +1,22 @@
 const { Router } = require('express');
 const app = Router();
-const User = require('../controllers/User');
-
-// const Google = require('../controllers/Google');
-
-// app.route('/data')
-//     .get(Data.index)
-//     .post(Data.create)
-
-// app.route('/google')
-//     .get(Google.index)
-//     .post(Google.create)
-
-app.get('/users', User.index);
-app.delete('/users/:userId', User.remove);
-app.post('/auth/signup', User.create);
-app.post('/auth/login', User.login);
-// app.get('/data', Data.index);
-// app.post('/data/:dataId', Data.post);
-
-// app.get('/googledata', Google.index);
-// app.post('/gosuogledata/:googleId', Google.create);
+const Users = require('../controllers/Users');
+const Google = require('../controllers/Google');
+const isAuthenticated = require('../services/Auth');
+const Data = require('../controllers/Data');
+// USERS
+app.post('/auth/signup', Users.create);
+app.post('/auth/login', Users.login);
+app.get('/users', Users.index);
+app.get('/users/:userId', Users.getById);
+app.delete('/users/:userId', Users.remove);
 
 
 
+app.get('/data', Data.index);
+app.post('/data/dataId', Data.create);
+
+ app.get('/googledata', Google.index);
+ app.post('/googledata/googleId', Google.create);
 
 module.exports = app;

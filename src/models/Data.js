@@ -1,52 +1,26 @@
-const mongoose = require('mongoose');
+const ODM = require('mongoose');
 
-const Schema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectedId,
-    imagedish:{
-        data: Buffer, 
-        contentType: String,
-        required: true,
-    },
-    typefood:{
+const Schema = new ODM.Schema({
+    _id: ODM.Schema.Types.ObjectId,
+    food:{
         type: String,
         required: true,
-    },
-    description: {
-        type: String,
-        required: false,
     },
     lastprice:{
-        type: Number,
+        type: String,
         required: true,
     },
     actualprice:{
-        type: Number,
+        type: String,
         required: true,
     },
     saving:{
-    type: Number,
+    type: String,
     required: true,
-    },   
-    initdate:{
-        type: Date,
-        
-        required: true,
-    },
-    enddate:{
-        type: Date,
-        
-        required: true,
-    },
-    inithour:{
-        type: Date,
-        
-        required: true,
-    },
-    endhour:{
-        type: Date,
-        
-        required: true,
-    }
+    }   
+   
 })
 
-module.exports = mongoose.model('Data', Schema);
+module.exports = ODM.model('Data', Schema);
+
+
