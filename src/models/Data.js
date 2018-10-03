@@ -7,15 +7,15 @@ const Schema = new ODM.Schema({
         required: true,
     },
     lastprice:{
-        type: String,
+        type: Number,
         required: true,
     },
     actualprice:{
-        type: String,
+        type: Number,
         required: true,
     },
     saving:{
-    type: String,
+    type: Number,
     required: true,
     }   
    

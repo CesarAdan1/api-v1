@@ -4,7 +4,7 @@ const Data = require('../models/Data');
 const Controller = {
     index: (request, response) => {
         Data
-            -find({})
+            .find({})
             .exec()
             .then(data => {
                 response   
@@ -24,7 +24,7 @@ const Controller = {
     },
     create: (request, response) => {
         Data
-            
+            .find({})
             .exec()
             .then(data => {
                 if(data.length < 1) {
@@ -33,8 +33,8 @@ const Controller = {
                         _id: ODM.Types.ObjectId(),
                         food: request.body.food,
                         lastprice: request.body.lastprice,
-                        actualprices: request.body.actualprice,
-                        saving: request.body.save
+                        actualprice: request.body.actualprice,
+                        saving: request.body.saving
                         
                     });
                     newData

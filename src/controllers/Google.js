@@ -26,12 +26,14 @@ const Controller = {
     create: (request, response) => {
         Google
             .find({
-                nameplace: request.body.nameplace
+                placelocation: request.body.placelocation,
+                nameplace: request.body.nameplace,
+                telefono: request.body.telefono
             })
             .exec()
             .then(googledata => {
                 if(googledata.length < 1){
-                const newData = new Data({
+                const newData = new Google({
                     _id: ODM.Types.ObjectId(),
                     
                     placelocation: request.body.placelocation,

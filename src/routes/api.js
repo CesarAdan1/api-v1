@@ -14,9 +14,9 @@ app.delete('/users/:userId', Users.remove);
 
 
 app.get('/data', Data.index);
-app.post('/data/dataId', Data.create);
+app.post('/data', Data.create);
 
  app.get('/googledata', Google.index);
- app.post('/googledata/googleId', Google.create);
+ app.post('/googledata', Google.create);
 
 module.exports = app;
