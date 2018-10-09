@@ -24,18 +24,33 @@ const Controller = {
     },
     create: (request, response) => {
         Data
-            .find({})
+            .find({
+                kind: request.body.kind,
+                        food: request.body.food,
+                        lastprice: request.body.lastprice,
+                        actualprice: request.body.actualprice,
+                        saving: request.body.saving,
+                        availability: request.body.availability
+
+                
+              })
             .exec()
             .then(data => {
                 if(data.length < 1) {
                     
                     const newData = new Data({
                         _id: ODM.Types.ObjectId(),
+                        //image: request.body.image,
+                        kind: request.body.kind,
                         food: request.body.food,
                         lastprice: request.body.lastprice,
                         actualprice: request.body.actualprice,
-                        saving: request.body.saving
-                        
+                        saving: request.body.saving,
+                        // firstdate: request.body.firstdate,
+                        // lastdate: resquest.body.lastdate,
+                        // inithour: request.body.inithour,
+                        // endhour: request.body.endhour,
+                        availability: request.body.availability
                     });
                     newData
                         .save()
@@ -65,7 +80,7 @@ const Controller = {
     },
     remove: (request, response) => {
         Data
-          .findByIdAndRemove(request.params.userId)
+          .findByIdAndRemove(request.params.dataId)
           .exec()
           .then(() => {
             response
@@ -74,7 +89,26 @@ const Controller = {
                 message: 'User was deleted.'
               });
           });
-      }
+      },
+      getById: (req, res) => {
+       Data
+          .findById(req.params.dataId)
+          .exec()
+          .then(user => {
+            response
+              .status(200)
+              .json({
+                user
+              });
+          })
+          .catch(error => {
+            response
+              .status(500)
+              .json({
+                error
+              });
+          });
+      },
 }
 
 module.exports = Controller;

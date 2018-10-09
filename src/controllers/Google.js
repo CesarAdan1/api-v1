@@ -67,19 +67,39 @@ const Controller = {
                     }
                 })
                 .catch(error => console.log(error));
-                 }
-                //  remove: (request, response) => {
-                //      Google
-                //         .findByIdAndRemove(request.params.userId)
-                //         .exec()
-                //         .then(() =>{
-                //             response
-                //                 .status(200)
-                //                 .json({
-                //                     message: "Data was deleted"
-                //                 })
-                //         });
-                //  }
+                 },
+                 remove: (request, response) => {
+                    Google
+                      .findByIdAndRemove(request.params.googledataId)
+                      .exec()
+                      .then(() => {
+                        response
+                          .status(200)
+                          .json({
+                            message: 'User was deleted.'
+                          });
+                      });
+                  },
+                  getById: (req, res) => {
+                  Google
+                      .findById(req.params.googledataId)
+                      .exec()
+                      .then(user => {
+                        response
+                          .status(200)
+                          .json({
+                            user
+                          });
+                      })
+                      .catch(error => {
+                        response
+                          .status(500)
+                          .json({
+                            error
+                          });
+                      });
+                  },
+                 
 
     }
 

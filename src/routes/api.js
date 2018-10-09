@@ -11,12 +11,14 @@ app.get('/users', Users.index);
 app.get('/users/:userId', Users.getById);
 app.delete('/users/:userId', Users.remove);
 
-
-
 app.get('/data', Data.index);
+app.get('/data/:dataId', Data.getById);
 app.post('/data', Data.create);
+app.delete('/data/:dataId', Data.remove)
 
- app.get('/googledata', Google.index);
- app.post('/googledata', Google.create);
+app.get('/googledata', Google.index);
+app.get('/googledata/:googledataId', Google.getById);
+app.post('/googledata', Google.create);
+app.delete('/googledata/:googledataId', Google.remove)
 
 module.exports = app;
