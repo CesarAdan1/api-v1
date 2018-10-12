@@ -25,7 +25,7 @@ const Controller = {
     create: (request, response) => {
         Data
             .find({
-                kind: request.body.kind,
+                        kind: request.body.kind,
                         food: request.body.food,
                         lastprice: request.body.lastprice,
                         actualprice: request.body.actualprice,
@@ -40,16 +40,12 @@ const Controller = {
                     
                     const newData = new Data({
                         _id: ODM.Types.ObjectId(),
-                        //image: request.body.image,
+                        
                         kind: request.body.kind,
                         food: request.body.food,
                         lastprice: request.body.lastprice,
                         actualprice: request.body.actualprice,
                         saving: request.body.saving,
-                        // firstdate: request.body.firstdate,
-                        // lastdate: resquest.body.lastdate,
-                        // inithour: request.body.inithour,
-                        // endhour: request.body.endhour,
                         availability: request.body.availability
                     });
                     newData
